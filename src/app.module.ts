@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { MovieController } from './movie/movie.controller';
@@ -10,12 +10,18 @@ import { LoggingInterceptor } from './logger/logger.interceptor';
 const AllControllers = [AppController, MovieController];
 
 @Module({
-  imports: [MovieModule, ConfigModule, SecretModule],
+  imports: [MovieModule, ConfigModule, SecretModule, CacheModule.register()],
   controllers: AllControllers,
-  providers: [{
-    provide: APP_INTERCEPTOR,
-    useClass: LoggingInterceptor,
-  }],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+  ],
   exports: [],
 })
 export class AppModule {}
