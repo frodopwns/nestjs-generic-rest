@@ -4,9 +4,7 @@ import { ConfigService } from './config.service';
 @Global()
 @Module({
   controllers: [],
-  providers: [
-    ConfigService,
-  ],
+  providers: [ConfigService],
   exports: [ConfigService],
 })
 export class ConfigModule {}

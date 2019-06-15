@@ -1,26 +1,24 @@
-import { LoggerService } from '@nestjs/common';
-
 /**
  * Logging and Tracing Provider Interface
  * that abstracts logging/tracing
  */
 
 export interface ILoggingProvider {
-    /**
-     * Logs tracing information
-     * @param message message to trace
-     * @param id custom id to correlate traces
-     */
-    Trace(message: string, id?: string): void;
-    /**
-     * Logs an error with the error code and the error message string specified
-     * @param error error to log
-     * @param errormessage Message to log
-     */
-    Error(error: Error, errormessage: string): void;
-    log(message: string): void;
-    error(message: string, trace: string): void;
-    warn(message: string): void;
-    debug(message: string): void;
-    verbose(message: string): void;
+  /**
+   * Logs tracing information
+   * @param message message to trace
+   * @param id custom id to correlate traces
+   */
+  Trace(message: string, id?: string): void;
+  /**
+   * Logs an error with the error code and the error message string specified
+   * @param error error to log
+   * @param errormessage Message to log
+   */
+  Error(error: Error, errormessage: string): void;
+  log(message: string): void;
+  error(message: string, trace: string): void;
+  warn(message: string): void;
+  debug(message: string): void;
+  verbose(message: string): void;
 }

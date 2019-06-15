@@ -2,21 +2,6 @@ import * as bunyan from 'bunyan';
 import { v4 } from 'uuid';
 import { ILoggingProvider } from './interfaces/logger.interface';
 import { Injectable, Inject, Optional } from '@nestjs/common';
-import { ConfigService } from '../config/config.service';
-
-export function LoggerProviders() {
-  return (
-    [
-      BunyanLogger,
-      {
-        provide: 'LOGGER_NAME',
-        useValue: {
-            name: 'helium.module',
-        },
-      },
-    ]
-  );
-}
 
 @Injectable()
 export class BunyanLogger implements ILoggingProvider {
@@ -54,7 +39,7 @@ export class BunyanLogger implements ILoggingProvider {
       },
       streams: [
         {
-          level: bunyan.TRACE,  // logs "trace" level and everything above
+          level: bunyan.TRACE, // logs "trace" level and everything above
           stream: process.stdout,
         },
         {
@@ -69,18 +54,27 @@ export class BunyanLogger implements ILoggingProvider {
   public Trace(message: string, id?: string) {
     if (id == null) {
       if (this.customId == null) {
-        this.Logger.trace({corr_id: this.uniqueServerId}, message);
+        this.Logger.trace({ corr_id: this.uniqueServerId }, message);
       } else {
-        this.Logger.trace({corr_id: this.uniqueServerId, custom_id: this.customId}, message);
+        this.Logger.trace(
+          { corr_id: this.uniqueServerId, custom_id: this.customId },
+          message,
+        );
       }
     } else {
       this.customId = id;
-      this.Logger.trace({corr_id: this.uniqueServerId, custom_id: this.customId}, message);
+      this.Logger.trace(
+        { corr_id: this.uniqueServerId, custom_id: this.customId },
+        message,
+      );
     }
   }
 
   public Error(error: Error, errormessage: string) {
-    this.Logger.error({err: error, corr_id: this.uniqueServerId, custom_id: this.customId}, errormessage);
+    this.Logger.error(
+      { err: error, corr_id: this.uniqueServerId, custom_id: this.customId },
+      errormessage,
+    );
   }
 
   public log = (message: string): void => {

@@ -1,25 +1,25 @@
-import { Module, Global, Inject, DynamicModule } from '@nestjs/common';
+import { Module, Global, DynamicModule } from '@nestjs/common';
 import { BunyanLogger } from './extlogger.service';
 
 @Global()
 @Module({
   controllers: [],
-  providers: [
-    BunyanLogger,
-  ],
+  providers: [BunyanLogger],
   exports: [BunyanLogger],
 })
 export class LoggerModule {
   static forRoot(entities = [], options?): DynamicModule {
-    const providers = [{
-      provide: 'LOGGER_NAME',
-      useValue: {
+    const providers = [
+      {
+        provide: 'LOGGER_NAME',
+        useValue: {
           name: 'helium.bunyan',
+        },
       },
-    }]
+    ];
     return {
       module: LoggerModule,
-      providers: providers,
+      providers,
       exports: providers,
     };
   }

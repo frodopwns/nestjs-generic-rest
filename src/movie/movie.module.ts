@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MovieController } from './movie.controller';
 import { LoggerModule } from '../logger/logger.module';
 import { DbModule } from '../db/db.module';
-import { SecretModule} from '../secrets/secrets.module';
+import { SecretModule } from '../secrets/secrets.module';
 import { ConfigModule } from '../config/config.module';
 import { TelemetryModule } from '../telemetry/telemetry.module';
 
