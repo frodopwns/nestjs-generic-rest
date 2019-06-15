@@ -1,7 +1,7 @@
 import * as bunyan from 'bunyan';
 import { v4 } from 'uuid';
 import { ILoggingProvider } from './interfaces/logger.interface';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Optional } from '@nestjs/common';
 import { ConfigService } from '../config/config.service';
 
 export function LoggerProviders() {
@@ -45,7 +45,7 @@ export class BunyanLogger implements ILoggingProvider {
    * "trace" (10):
    *   Logging from external libraries used by your app or very detailed application logging.
    */
-  constructor(@Inject('LOGGER_NAME') private readonly name: any) {
+  constructor(@Optional() @Inject('LOGGER_NAME') private readonly name: any) {
     this.Logger = bunyan.createLogger({
       name: name.name,
       serializers: {
@@ -81,5 +81,22 @@ export class BunyanLogger implements ILoggingProvider {
 
   public Error(error: Error, errormessage: string) {
     this.Logger.error({err: error, corr_id: this.uniqueServerId, custom_id: this.customId}, errormessage);
+  }
+
+  public log = (message: string): void => {
+    this.Logger.info(message);
+  }
+
+  public error = (message: string, trace: string): void => {
+    this.Logger.trace(message, trace);
+  }
+  public warn = (message: string): void => {
+    this.Logger.info(message);
+  }
+  public debug = (message: string): void => {
+    this.Logger.info(message);
+  }
+  public verbose = (message: string): void => {
+    this.Logger.info(message);
   }
 }

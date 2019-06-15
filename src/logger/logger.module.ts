@@ -14,7 +14,7 @@ export class LoggerModule {
     const providers = [{
       provide: 'LOGGER_NAME',
       useValue: {
-          name: 'bunyanlog',
+          name: 'helium.bunyan',
       },
     }]
     return {
