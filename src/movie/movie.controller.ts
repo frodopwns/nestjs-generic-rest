@@ -13,9 +13,7 @@ import { KeyVaultProvider } from '../secrets/keyvault.service';
 import { CosmosDBProvider } from 'src/db/cosmos.service';
 import { DocumentQuery, RetrievedDocument } from 'documentdb';
 import { DATABASE_NAME, COLLECTION_NAME } from '../db/constants';
-import { LoggingInterceptor } from '../logger/logger.interceptor';
 
-@UseInterceptors(LoggingInterceptor)
 @Controller('movies')
 export class MovieController {
   constructor(
