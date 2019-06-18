@@ -16,6 +16,7 @@ export class ConfigService {
     let v: string;
     v = process.env[k];
     if (!v || v.length === 0) {
+      console.log(`failed to get env var ${k}`)
       throw new Error('No environment variable named: ' + k);
     }
     return v;

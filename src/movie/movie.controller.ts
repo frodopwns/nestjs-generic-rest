@@ -5,7 +5,6 @@ import {
   Inject,
   HttpException,
   HttpStatus,
-  UseInterceptors,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { BunyanLogger } from '../logger/extlogger.service';
@@ -13,6 +12,10 @@ import { KeyVaultProvider } from '../secrets/keyvault.service';
 import { CosmosDBProvider } from 'src/db/cosmos.service';
 import { DocumentQuery, RetrievedDocument } from 'documentdb';
 import { DATABASE_NAME, COLLECTION_NAME } from '../db/constants';
+
+const getAllQuery = `SELECT root.* FROM root where root.type = 'Movie'`;
+const getAllFilterQuery = `SELECT root.* FROM root where CONTAINS(root.textSearch, @title) and root.type = 'Movie'`;
+const getByIdQuery = `SELECT root.* FROM root where root.id = @id and root.type = 'Movie'`;
 
 @Controller('movies')
 export class MovieController {
@@ -32,9 +35,7 @@ export class MovieController {
     if (movieName === undefined) {
       querySpec = {
         parameters: [],
-        query: `SELECT root.movieId, root.type, root.title, root.year,
-            root.runtime, root.genres, root.roles
-            FROM root where root.type = 'Movie'`,
+        query: getAllQuery,
       };
     } else {
       // Use StartsWith in the title search since the textSearch property always starts with the title.
@@ -47,9 +48,7 @@ export class MovieController {
             value: movieName.toLowerCase(),
           },
         ],
-        query: `SELECT root.movieId, root.type, root.title, root.year,
-            root.runtime, root.genres, root.roles
-            FROM root where CONTAINS(root.textSearch, @title) and root.type = 'Movie'`,
+        query: getAllFilterQuery,
       };
     }
 
@@ -80,9 +79,7 @@ export class MovieController {
           value: movieId,
         },
       ],
-      query: `SELECT root.id, root.movieId, root.type, root.title, root.year,
-          root.runtime, root.genres, root.roles, root.key
-          FROM root where root.id = @id and root.type = 'Movie'`,
+      query: getByIdQuery,
     };
 
     // movieId isn't the partition key, so any search on it will require a cross-partition query.
