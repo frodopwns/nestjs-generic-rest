@@ -1,0 +1,33 @@
+{
+    "title": "Actor",
+    "type": "object",
+    "properties": {
+      "actorId": {
+        "type": "string",
+        "description": "actor id"
+      },
+      "name": {
+        "type": "string",
+        "description": "actor's name"
+      },
+      "birthYear": {
+        "type": "integer",
+        "description": "actor's birth year"
+      },
+      "textSearch": {
+        "type": "string",
+        "description": "search stirng"
+      },
+      "profession": {
+        "type": "list",
+        "description": "job roles held previously"
+      },
+      "movies": {
+        "type": "list",
+        "data_relation": {
+            "resource": "Movie",
+            "field": "movieId"
+        }
+      }
+    }
+  }

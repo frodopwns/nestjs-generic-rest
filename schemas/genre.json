@@ -1,0 +1,11 @@
+{
+    "title": "Genre",
+    "type": "object",
+    "properties": {
+      "genre": {
+        "type": "string",
+        "description": "the string representation of a Genre",
+        "required": true
+      }
+    }
+  }

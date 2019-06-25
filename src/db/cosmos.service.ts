@@ -61,7 +61,8 @@ export class CosmosDBProvider {
     @Inject('ConfigService') private config: ConfigService,
     private readonly dbkey: string,
   ) {
-    this.docDbClient = new DocumentClient(config.getVarErr('COSMOSDB_URL'), {
+    const cosmosURL = config.getVarErr('COSMOSDB_URL');
+    this.docDbClient = new DocumentClient(cosmosURL, {
       masterKey: dbkey,
     });
 

@@ -20,7 +20,7 @@ export class LoggingInterceptor implements NestInterceptor {
     const req = context.getArgByIndex(0);
     const res = context.getArgByIndex(1);
     const apiName = `${req.method} ${req.url}`;
-    this.logger.Trace('API: ' + apiName);
+    this.logger.Trace(apiName);
     this.telem.trackEvent(apiName);
 
     const now = Date.now();

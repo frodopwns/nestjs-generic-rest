@@ -1,0 +1,4 @@
+{
+    "DATABASE_NAME": "imdb",
+    "DATABASE_COLLECTION": "movies"
+}

@@ -1,16 +1,15 @@
 import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AppController } from './app.controller';
-import { MovieController } from './movie/movie.controller';
-import { MovieModule } from './movie/movie.module';
-import { ConfigModule } from './config/config.module';
+import { ResourceController } from './resource/resource.controller';
+import { ResourceModule } from './resource/resource.module';
+import { ResourceMiddleware } from './middleware/resource.middleware';
 import { SecretModule } from './secrets/secrets.module';
 import { LoggingInterceptor } from './logger/logger.interceptor';
-
-const AllControllers = [AppController, MovieController];
+const AllControllers = [AppController, ResourceController];
 
 @Module({
-  imports: [MovieModule, ConfigModule, SecretModule, CacheModule.register()],
+  imports: [ResourceModule, SecretModule, CacheModule.register()],
   controllers: AllControllers,
   providers: [
     {
@@ -20,6 +19,10 @@ const AllControllers = [AppController, MovieController];
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResourceMiddleware,
     },
   ],
   exports: [],

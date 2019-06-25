@@ -1,0 +1,16 @@
+{
+    "title": "Taco",
+    "type": "object",
+    "properties": {
+      "meat": {
+        "type": "string",
+        "required": true,
+        "empty": false,
+        "allowed": ["beef", "chicken", "pork", "tofu"]
+      },
+      "lettuce": {
+        "type": "boolean",
+        "required": true
+      }
+    }
+  }

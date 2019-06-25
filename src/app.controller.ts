@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { ConfigService } from './config/config.service';
 import { Request } from 'express';
 

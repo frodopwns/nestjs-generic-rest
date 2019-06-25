@@ -1,13 +1,14 @@
-import { Module } from '@nestjs/common';
-import { MovieController } from './movie.controller';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { ResourceController } from './resource.controller';
 import { LoggerModule } from '../logger/logger.module';
 import { DbModule } from '../db/db.module';
 import { SecretModule } from '../secrets/secrets.module';
 import { ConfigModule } from '../config/config.module';
 import { TelemetryModule } from '../telemetry/telemetry.module';
+import { BaseControllerMiddleware } from '../middleware/baseConstroller.middleware';
 
 @Module({
-  controllers: [MovieController],
+  controllers: [ResourceController],
   providers: [],
   imports: [
     ConfigModule,
@@ -16,6 +17,12 @@ import { TelemetryModule } from '../telemetry/telemetry.module';
     TelemetryModule.forRoot(),
     DbModule.forRoot(),
   ],
-  exports: [SecretModule, TelemetryModule.forRoot(), DbModule.forRoot()],
+  exports: [SecretModule],
 })
-export class MovieModule {}
+export class ResourceModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(BaseControllerMiddleware)
+      .forRoutes('api/:resource');
+  }
+}

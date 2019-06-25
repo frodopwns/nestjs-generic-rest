@@ -1,0 +1,50 @@
+{
+    "title": "Movie",
+    "type": "object",
+    "search_field": "textSearch",
+    "properties": {
+      "movieId": {
+        "type": "string",
+        "description": "movie id"
+      },
+      "title": {
+        "type": "string",
+        "description": "movie's name",
+        "minlength": 2,
+        "required": true
+      },
+      "year": {
+        "type": "integer",
+        "description": "movie's creation year"
+      },
+      "runtime": {
+        "type": "integer",
+        "description": "movie's run time"
+      },
+      "textSearch": {
+        "type": "string",
+        "description": "search stirng"
+      },
+      "genres": {
+        "type": "list",
+        "data_relation": {
+            "resource": "Genre",
+            "field": "genre"
+        }
+      },
+      "roles": {
+        "type": "list",
+        "schema": {
+            "type": "dict",
+            "schema": {
+                "order": {"type": "integer"},
+                "actorId": {"type": "string"},
+                "name": {"type": "string"},
+                "profession": {"type": "list"},
+                "category": {"type": "string"},
+                "characters": {"type": "list"}
+             }
+         }
+      }
+    }
+  }
